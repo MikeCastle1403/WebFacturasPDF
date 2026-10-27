@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Welcome Hero Section -->
+<section class="welcome-hero" aria-labelledby="welcomeHeading">
+  <div class="welcome-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="12" cy="12" r="10"></circle>
+      <polyline points="12 6 12 12 14 14"></polyline>
+    </svg>
+    <span>Document Management Platform</span>
+  </div>
+
+  <h1 class="welcome-title" id="welcomeHeading">Welcome to {{ app_name }}</h1>
+  
+  <p class="welcome-subtitle">
+    A clean, modern workspace designed to upload, organize, preview, search, and download your PDF invoices, contracts, and digital documents with speed and simplicity.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn btn-primary" id="heroUploadAction" onclick="openUploadModal()">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      <span>Upload Your First File</span>
+    </button>
+
+    <button class="btn btn-secondary" id="heroLearnMore" onclick="showToast('DocuFlow is ready. Base project initialized successfully!')">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <span>System Overview</span>
+    </button>
+  </div>
+</section>
+
+<!-- Overview Metrics Grid -->
+<div class="metrics-grid" role="region" aria-label="System Metrics">
+  <div class="metric-card" id="metricCardTotal">
+    <div class="metric-info">
+      <span class="metric-label">Total Documents</span>
+      <span class="metric-value">{{ stats.total_documents }}</span>
+      <span class="metric-sub">0 files added today</span>
+    </div>
+    <div class="metric-icon-box" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+      </svg>
+    </div>
+  </div>
+
+  <div class="metric-card" id="metricCardStorage">
+    <div class="metric-info">
+      <span class="metric-label">Storage Used</span>
+      <span class="metric-value">{{ stats.storage_used }}</span>
+      <span class="metric-sub">Available: 5.00 GB</span>
+    </div>
+    <div class="metric-icon-box" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      </svg>
+    </div>
+  </div>
+
+  <div class="metric-card" id="metricCardCategories">
+    <div class="metric-info">
+      <span class="metric-label">Active Folders</span>
+      <span class="metric-value">{{ stats.categories }}</span>
+      <span class="metric-sub">Invoices, Contracts, Receipts</span>
+    </div>
+    <div class="metric-icon-box" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </div>
+  </div>
+
+  <div class="metric-card" id="metricCardStatus">
+    <div class="metric-info">
+      <span class="metric-label">Service Health</span>
+      <span class="metric-value" style="color: var(--color-success); font-size: 20px;">100% Active</span>
+      <span class="metric-sub">Python Flask backend</span>
+    </div>
+    <div class="metric-icon-box" style="background-color: var(--color-success-background); color: var(--color-success); border-color: #bbf7d0;" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- Main Split Content: Dropzone & Onboarding Guide -->
+<div class="content-grid">
+  <!-- Left Side: Interactive Dropzone & Getting Started -->
+  <section aria-labelledby="quickDropzoneTitle">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title" id="quickDropzoneTitle">Quick Document Dropzone</h2>
+        <p class="section-desc">Drag and drop files to store and organize them instantly.</p>
+      </div>
+    </div>
+
+    <div class="upload-welcome-card" id="mainDropzone" onclick="openUploadModal()">
+      <div class="dropzone-icon-circle">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+      </div>
+      <h3 class="dropzone-title">Drop your PDF files or click to browse</h3>
+      <p class="dropzone-desc">Ready for invoices (facturas), reports, legal docs, and scanned records up to 32MB.</p>
+      
+      <div class="supported-formats-pills" aria-label="Supported document formats">
+        <span class="format-pill">PDF (.pdf)</span>
+        <span class="format-pill">Word (.docx)</span>
+        <span class="format-pill">Text (.txt)</span>
+        <span class="format-pill">Images (.png, .jpg)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Right Side: Quick Start Guide -->
+  <aside aria-labelledby="guideTitle">
+    <div class="guide-card">
+      <h2 class="section-title" id="guideTitle" style="font-size: 18px;">Quick Start Guide</h2>
+      <p class="section-desc">Get the most out of your document platform</p>
+
+      <div class="guide-step-list">
+        <div class="guide-step-item">
+          <div class="step-number">1</div>
+          <div class="step-details">
+            <span class="step-title">Upload Documents</span>
+            <span class="step-desc">Add PDF files, invoices, or receipts with rapid local storage.</span>
+          </div>
+        </div>
+
+        <div class="guide-step-item">
+          <div class="step-number">2</div>
+          <div class="step-details">
+            <span class="step-title">Organize & Tag</span>
+            <span class="step-desc">Categorize documents into folders and tag them for quick access.</span>
+          </div>
+        </div>
+
+        <div class="guide-step-item">
+          <div class="step-number">3</div>
+          <div class="step-details">
+            <span class="step-title">Preview & Download</span>
+            <span class="step-desc">Inspect document content directly in-browser and download anytime.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="features-box">
+        <div class="features-box-title">Platform Features</div>
+        <div class="feature-tag-list">
+          <span class="feature-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Clean UI
+          </span>
+          <span class="feature-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            PDF Ready
+          </span>
+          <span class="feature-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Fast Python Backend
+          </span>
+          <span class="feature-tag">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            Accessible
+          </span>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+{% endblock %}
